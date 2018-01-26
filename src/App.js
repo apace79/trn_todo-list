@@ -2,13 +2,24 @@ import React, { Fragment } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const App = props => {
-      const projects = [{'name':'KANBANF'}, {'name':'BOARDGAME 1'}, {'name':'BOARDGAME 2'}];
-      return (<Fragment>
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {'projects': []};
+  }
+
+  render() {
+       return (<Fragment>
         <h1 id="title">KANBAN</h1>
-        <Projects projects={projects}/>
-      </Fragment>);
-    };
+        <Projects projects={this.state.projects}/>
+      </Fragment>);   
+  }
+
+  componentWillMount() {
+    const data = fetch("/projects/").then(response => response.json()).then(data => this.setState({'projects': data.projects}))
+    /*const projects = fetch("/projects/").then(response => console.log(response))*/   
+  }
+}
 
 const Projects = props => {
   const projects = props.projects;
