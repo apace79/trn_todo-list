@@ -14,25 +14,24 @@ class App extends React.Component {
 
   render() {
        return (<Fragment>
-        <h1 id="title">KANBAN</h1>
-        <Projects projects={this.state.projects} loading={this.state.loading}/>
-      </Fragment>);   
+                 <h1 id="title">KANBAN</h1>
+                 <Projects projects={this.state.projects} loading={this.state.loading}/>
+               </Fragment>);   
   }
 
   componentDidMount() {
     /*test slow connection to back-end*/
-    sleep(1000).then(() => {
-    const data = fetch("/projects/").then(response => response.json()
-                                   ).then(data =>  this.setState({'projects': data.projects, 'loading': false}))
+    sleep(2000).then(() => {fetch("/projects/").then(response => response.json()
+                                              ).then(data =>  this.setState({'projects': data.projects, 'loading': false}))
     });
   }
 }
 
 const Projects = props => {
   const projects = props.projects;
-  const projLoading = <Project name='Loading...'/> 
+  const projLoading = <Project name='Loading...'/>;
   const projItems = projects.map((project) => 
-            <Project key={project.name} name={project.name} /> 
+            <Project key={project.name} name={project.name} selected={project.selected} /> 
       );
   if (props.loading) {
     return (<div id="projects">
@@ -47,16 +46,37 @@ const Projects = props => {
   }
 }
 
+const Spinner = props => (<div className="spinner">
+                            <div className="bounce1"></div>
+                            <div className="bounce2"></div>
+                            <div className="bounce3"></div>
+                          </div>
+                          );
+
+const AddButton = props => (<div className="circle">
+                              <div className="bar horizontal"></div>
+                              <div className="bar vertical"></div>
+                            </div>
+                            );
+
 const Project = props => {
       switch (props.name) {
          case '+':
-           return <div className="project" id="add-project">+</div>;
-           break;
+           return (<div className="project" id="add-project">
+                     <AddButton />
+                   </div>
+                   );
          case 'Loading...':
-           return <div className="project" id="loading-project">Loading...</div>;
-           break;
+           return (<div className="project" id="loading-project">
+                     <Spinner />
+                   </div>
+                   );
          default:
-           return <div className="project">{props.name}</div>;
+           let classes = ['project'];
+           if (props.selectedp === 'Y') {
+             classes.push('selected')
+           }
+           return <div className={classes.join(' ')}  data-selected={props.selected} >{props.name}</div>;
     }
 }
 

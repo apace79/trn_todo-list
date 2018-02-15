@@ -1,5 +1,7 @@
 /* style.css */
 
+/* color scheme https://coolors.co/ff5e5b-011638-d8d8d8-58a4b0-fff25a */
+
 /*
 ** container **
 **********************************
@@ -20,14 +22,16 @@ body {
 */
 
 #app > h1 {
-	background-color: #d8d8d8;
-	background-color: #44AF69;
-	padding-top: 5px;
+	/*background-color: #d8d8d8;*/
+	/*background-color: #44AF69;*/
+    font-size: 3em;
+    background-color: #58a4b0;
+	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 10px;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	border-bottom: 2px solid black;
+	border-bottom: 4px solid black;
 }
 
 /*
@@ -39,12 +43,20 @@ body {
   display: flex;
   flex-direction: row;
   width: 100%;
-  border-bottom: 1px solid black;  
+  border-bottom: 2px solid black;
 }
 
 .project {
   padding: 15px;
-  padding-bottom: 0px;
+  padding-bottom: 5px;
+  padding-top: 10px;
+  font-weight: bold;
+  -webkit-transition-property: background-color;
+  -webkit-transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease;
+  transition-property:background-color;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
 }
 
 .project:hover {
@@ -52,12 +64,12 @@ body {
 	cursor: pointer;
 }
 
-.project:first-child {
+.project[data-selected=true]{
   border-bottom: 2px solid #FF5E5B;
 }
 
 #add-project {
-	font-size: 100%;
+	padding-top: 8px;
 }
 
 /*
@@ -80,7 +92,7 @@ body {
 #lanes {
   display: flex;
   flex-direction: row;
-  margin: 10px;  
+  margin: 10px;
 }
 
 .lane {
@@ -104,7 +116,7 @@ body {
   border-bottom: 1px solid black;
   margin: 0px;
   padding: 3px;
-  padding-left: 10px;    
+  padding-left: 10px;
 }
 
 /*
@@ -136,3 +148,85 @@ body {
 	appearance: none;
     margin-right: 10px;
 }
+
+/*
+** SPINNER 
+**********************************
+*/
+
+.spinner {
+  margin: 0px auto 0;
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 12px;
+  height: 12px;
+  background-color: #333;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
+
+/*
+** PLUS SIGN
+*********************/
+
+.circle {
+  border-radius: 3px;
+  width: 20px;
+  height: 20px;
+  background-color: #58a4b0;
+  position: relative;
+}
+
+.bar {
+  margin: 0 auto;
+  position: absolute;
+  background-color: #011638;
+}
+
+.horizontal {
+  width: 70%;
+  height: 20%;
+  left: 15%;
+  top: 40%;
+}
+
+.vertical {
+  width: 20%;
+  height: 70%;
+  left: 40%;
+  top: 15%;
+}
+
+/***********************/
+
