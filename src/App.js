@@ -1,15 +1,24 @@
 import React, { Fragment } from 'react';
 import logo from './logo.svg';
-import './App.css';
+/*import './App.css';*/
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+/* TO-DO, back-end access class
+class API {
+  getJson(url, ) {
+  
+  }
+}
+*/
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {'projects': [], 'loading': true};
+    this.onSelectProject = this.onSelectProject.bind(this)
   }
 
   render() {
@@ -21,9 +30,15 @@ class App extends React.Component {
 
   componentDidMount() {
     /*test slow connection to back-end*/
-    sleep(2000).then(() => {fetch("/projects/").then(response => response.json()
-                                              ).then(data =>  this.setState({'projects': data.projects, 'loading': false}))
+    sleep(2000).then(() => {fetch("/projects/"
+              ).then(response => response.json()
+              ).then(data =>  this.setState({'projects': data.projects, 'loading': false}))
     });
+  }
+
+  onSelectProject(id) {
+    const _projects = this.state.projects;
+
   }
 }
 
@@ -58,6 +73,7 @@ const AddButton = props => (<div className="circle">
                               <div className="bar vertical"></div>
                             </div>
                             );
+
 
 const Project = props => {
       switch (props.name) {
