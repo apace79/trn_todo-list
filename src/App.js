@@ -35,10 +35,12 @@ class App extends React.Component {
               ).then(data =>  this.setState({'projects': data.projects, 'loading': false}))
     });
   }
-
-  onSelectProject(id) {
-    const _projects = this.state.projects;
-
+  /*WIP*/
+  onSelectProject(e) {
+    const id = e.target.data-id;
+    const projects = this.state.projects;
+    
+    /* set selected on the project with right id */
   }
 }
 
@@ -46,7 +48,7 @@ const Projects = props => {
   const projects = props.projects;
   const projLoading = <Project name='Loading...'/>;
   const projItems = projects.map((project) => 
-            <Project key={project.name} name={project.name} selected={project.selected} /> 
+            <Project key={project.name} id={project.id} name={project.name} selected={project.selected} /> 
       );
   if (props.loading) {
     return (<div id="projects">
@@ -74,7 +76,6 @@ const AddButton = props => (<div className="circle">
                             </div>
                             );
 
-
 const Project = props => {
       switch (props.name) {
          case '+':
@@ -92,7 +93,7 @@ const Project = props => {
            if (props.selectedp === 'Y') {
              classes.push('selected')
            }
-           return <div className={classes.join(' ')}  data-selected={props.selected} >{props.name}</div>;
+           return <div className={classes.join(' ')} data-id={props.id}  data-selected={props.selected} onClick={props.onSelectProject}>{props.name}</div>;
     }
 }
 
