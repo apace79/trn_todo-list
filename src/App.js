@@ -24,7 +24,9 @@ class App extends React.Component {
   render() {
        return (<Fragment>
                  <h1 id="title">KANBAN</h1>
-                 <Projects projects={this.state.projects} loading={this.state.loading}/>
+                 <Projects projects={this.state.projects} 
+                           loading={this.state.loading}
+                           onSelectProject={this.onSelectProject} />
                </Fragment>);   
   }
 
@@ -35,12 +37,23 @@ class App extends React.Component {
               ).then(data =>  this.setState({'projects': data.projects, 'loading': false}))
     });
   }
-  /*WIP*/
+  
   onSelectProject(e) {
-    const id = e.target.data-id;
-    const projects = this.state.projects;
-    
-    /* set selected on the project with right id */
+    const idStr = e.target.dataset.id;
+    /* set selected on the project with the right id */
+    this.setState(prevState => {
+        const selectTarget = (el => {
+          if (el.id.toString() === idStr) {
+            el.selected = true;
+          } else {
+            el.selected = false;
+          }
+          return el;
+        });
+        const projects = prevState.projects.map(selectTarget);
+        return {'projects': projects};
+      }
+    );
   }
 }
 
@@ -48,7 +61,11 @@ const Projects = props => {
   const projects = props.projects;
   const projLoading = <Project name='Loading...'/>;
   const projItems = projects.map((project) => 
-            <Project key={project.name} id={project.id} name={project.name} selected={project.selected} /> 
+            <Project key={project.name} 
+                     id={project.id} 
+                     name={project.name} 
+                     selected={project.selected} 
+                     onSelectProject= {props.onSelectProject}/> 
       );
   if (props.loading) {
     return (<div id="projects">
@@ -93,7 +110,10 @@ const Project = props => {
            if (props.selectedp === 'Y') {
              classes.push('selected')
            }
-           return <div className={classes.join(' ')} data-id={props.id}  data-selected={props.selected} onClick={props.onSelectProject}>{props.name}</div>;
+           return <div className={classes.join(' ')} 
+                       data-id={props.id}  
+                       data-selected={props.selected} 
+                       onClick={props.onSelectProject}>{props.name}</div>;
     }
 }
 
